@@ -1,0 +1,137 @@
+; my karabiner.edn for generating karabiner.json with Goku 1/09/19 6:14 PM
+{
+:templates {
+	:alfred "osascript -e 'tell application \"Alfred 3\" to run trigger \"%s\" in workflow \"%s\" with argument \"\"'"
+	:km "osascript -e 'tell application \"Keyboard Maestro Engine\" to do script \"%s\"'"
+  }
+
+:simlayers {
+		:caps_lock-mode {:key :caps_lock}
+		:spacebar-mode {:key :spacebar}
+		:semicolon-mode {:key :semicolon}
+		:slash-mode {:key :slash}      
+		:d-mode {:key :d} 
+		:j-mode {:key :j}                      
+		:n-mode {:key :n}                                 
+		:f-mode {:key :f}             
+		:t-mode {:key :t} 
+		:nµ {:key :n} ; n-mode
+	},
+; ––––––––––––––––––––––––––––––––––––––––––––––––––––––
+:main [
+
+	;; n-mode µ
+	{:des "n mode for new things"
+    	:rules [
+			;; n+ii
+			[:i "say 'double...i'" [["nµ" 1] ["niµ" 1]]]
+				;; n+io
+				[:o "say 'three key...chord'" [["nµ" 1] ["ni¬" 1]]]
+			;; n+hh
+			[:h "say 'double...h'" [["nµ" 1] ["nhµ" 1]]]
+
+     	:nµ ; µ is just a short way to say mode
+      	; n+i (held)
+        [:i ["say 'i'"  ["niµ" 1]] nil {:delayed {:canceled ["say 'canceled'" ["niµ" 0]]
+        	:invoked ["say 'delayed'"["niµ" 0]]} 
+        	:held ["say 'holding i'" ["ni¬" 1]] }]
+      	; n+o 
+      	[:o "say 'o'" nil {:held "say 'holding o'"}]
+      	; n+h
+      	[:h ["say 'h'"  ["nhµ" 1]] nil {:delayed {:canceled ["nhµ" 0] :invoked ["nhµ" 0]}}]
+      	; n+g
+      	[:g ["say 'g'"  ["ngµ" 1]] nil {:delayed {:canceled ["ngµ" 0] :invoked ["ngµ" 0]}
+    			:held ["say 'holding g'" ["ng¬" 1]] }]
+  			; n+m
+				[:m "say 'm'" nil {:held "say 'holding m'"}]
+  			
+    	]}
+
+; –––––––––––––––––––––––– MODIFERS –––––––––––––––––––––––––––––––––
+
+	{:des "caps_lock-mode" ; Hyper on Hold and Esc on Tap
+		:rules [:caps_lock-mode
+		[:a :!!a] ; Snap Window Right via Slate
+		[:w :!!w] ; Snap Window Left via Slate
+		[:s :!!s] ; Snap Window Up via Slate
+		[:d :!!d] ; Snap Window Down via Slate
+		[:1 :!!1] ; Hyper Evernote via KM
+		[:2 :!!2] ; Hyper Chrome via KM
+		[:3 :!!3] ; Hyper OmniFocus via KM
+		[:4 :!!4] ; Hyper Sublime via KM
+		[:spacebar :!!spacebar]
+		]
+	}
+; –––––––––––––––––––––––– SIMULTANEOUS KEYS –––––––––––––––––––––––––––––––––
+	; km to activate Kearybord Maestro
+	{:des "km to Activate Keyboard Maestro" :rules [
+			[[:k :m] [:km "Activate Keyboard Maestro"]]
+		]}
+
+{:des "simultaneous j l press to F19"
+		:rules [[[:j :l] :f19]]} ;using an array for <from> makes it simultaneous
+			; the <to> is stil just ;f19
+
+
+
+
+; –––––––––––––––––––––––– MODES –––––––––––––––––––––––––––––––––
+
+	{:des "n-mode" ; New
+		:rules [:n-mode
+		[:l [:km "Log Palette"]]		; S for ⇧⇥
+		]}
+
+
+
+	{:des "semicolon-mode"
+  	:rules [:semicolon-mode
+    [:spacebar :!SOCspacebar] ; spacebar to Trigger Macro by name via ⇧⌥⌘SPACE
+    ]
+	}
+	{:des "slash-mode"
+  	:rules [:slash-mode
+    [:spacebar :!SCslash] ; spacebar to Focus help menu via ⇧⌘/
+    ]
+	}
+
+	{:des "spacebar-mode" ; Cursor Navigation and non-charactar keys
+		:rules [:spacebar-mode
+		[:j :left_arrow]
+		[:l :right_arrow]
+		[:i :up_arrow]
+		[:k :down_arrow]
+		[:p :delete_or_backspace]
+		[:o :tab]
+		[:u :!Stab]
+		[:d [:!!spacebar]]
+		]}
+
+	{:des "d-mode" ; DD for Tab Manipulation
+		:rules [:d-mode
+		[:s :!TStab] 							; S for ⇧⇥
+		[:f :!Ttab] 							; F for ⇥
+		[:a :!Copen_bracket] 			; A for Back Page via ⌘[
+		[:g :!Cclose_bracket] 		; G for Forward Page via ⌘}
+		[:spacebar :!Cp] 					; G for Forward Page via ⌘}
+		]}
+
+
+	
+	{:des "f-mode" ; FF for Focus
+		:rules [:f-mode
+		[:spacebar :button1]
+		]}
+
+	{:des "j-mode" ; 
+		:rules [:j-mode
+		[:e [:km "Jump to Evernote"]]
+		[:c [:km "Alfred Search Chrome Bookmarks"]]
+		[:o [:km "Jump to OmniFocus"]]
+		[:s [:km "Jump to Stickies"]]
+		]}
+
+
+
+]
+}
