@@ -1,39 +1,46 @@
-;*===================== KE-goku-config 0.92 5/07/19 ======================
-;  post goku update
+;*===================== KE-goku-config 0.95  ======================
+	;*5/15/19 3:44 PM post crash cleaning up...
 ;*META ===========================================================
-	; TODO: omnifocus:///task/bUT2ZCV3zLT
-	;TODO; reconcile /Users/loudog/Dropbox/Sync/KarabinerElements/complex-modificationsSync/CuratedExamples.json and  /Users/loudog/.config/karabiner/assets/complex_modifications/LouSpaceMode.json
-	; TODO: remote-mode, escape toggle passthrough, shift+space for underscores and space +</> for caps, respond to stack overflow about includes
-	; TODO: create gold standard snippet templates that allow for identified prioritized "benefits...good things about them" mode and template snippets (take into account readability, modularity, propogation,...)
-	; TODO Scrolling [:j {:mkey {:vwheel 100}}] [:k {:mkey {:vwheel -100}}] https://github.com/yqrashawn/GokuRakuJoudo/issues/18
 { ;========================= DEFINITIONS ============================
-	:templates { ;=.........................................................................................................................
+	:templates { ;..........................................................................................................................
 		:alf "osascript -e 'tell application \"Alfred 3\" to run trigger \"%s\" in workflow \"%s\" with argument \"\"'"
 		:km "osascript -e 'tell application \"Keyboard Maestro Engine\" to do script \"%s\"'"
 		:btt "osascript -e 'tell application \"BetterTouchTool\" to  trigger_named \"%s\"'"
+		:open "open \"%s\""
+		:wait "sleep 250"
 		:type "osascript -e 'tell application \"System Events\" to keystroke \"%s\"'" ; send keystroke
-		:escp "osascript -e 'tell application \"System Events\" to key code 53' " ; send escape
-		:sendq "osascript -e 'tell application \"System Events\" to keystroke \"q\"'" ; send keystroke
-		:sendreturn "osascript -e 'tell application \"System Events\" to keystroke return' " ; send escape
-		:sendspace "osascript -e 'tell application \"System Events\" to keystroke space' " ; send keystroke
-		:sendesc "osascript -e 'tell application \"System Events\" to keystroke tab' " ; send keystroke
-		; :escp "osascript -e 'tell application \"System Events\" to key code 53' -e 'sleep 2' -e 'key code \"a\"' -e 'end tell' " ; with -e for new line
-		:beep "afplay /System/Library/PrivateFrameworks/ScreenReader.framework/Versions/A/Resources/Sounds/WindowActivated.aiff" ; audible feedback  to know when KE trigger occurs, must be in wrapped in bracketes and coupled with another action in a bracketed array to work
-		:wait "sleep 250"}
-		;:open "open \"%s\""
+				:escp "osascript -e 'tell application \"System Events\" to key code 53' " ; send escape
+				:sendq "osascript -e 'tell application \"System Events\" to keystroke \"q\"'" ; send keystroke
+				:sendreturn "osascript -e 'tell application \"System Events\" to keystroke return' " ; send escape
+				:sendspace "osascript -e 'tell application \"System Events\" to keystroke space' " ; send keystroke
+				:sendesc "osascript -e 'tell application \"System Events\" to keystroke tab' " ; send keystroke
+		;* Sounds and Audio Feedback 🔈🔉🔊🔇🔔📣📢🎵💥
+				:🔊 "afplay /System/Library/PrivateFrameworks/ScreenReader.framework/Versions/A/Resources/Sounds/DrawerOpening.aiff"
+				:🔉 "afplay /System/Library/PrivateFrameworks/ScreenReader.framework/Versions/A/Resources/Sounds/DrawerClosing.aiff"
+				:🔈 "afplay /System/Library/PrivateFrameworks/ScreenReader.framework/Versions/A/Resources/Sounds/DrillOut.aiff"
+				:🔇 "afplay /System/Library/PrivateFrameworks/ScreenReader.framework/Versions/A/Resources/Sounds/DrillIn.aiff"
+				:beep "afplay /System/Library/PrivateFrameworks/ScreenReader.framework/Versions/A/Resources/Sounds/WindowActivated.aiff"
+				:soundA "afplay /System/Library/PrivateFrameworks/ScreenReader.framework/Versions/A/Resources/Sounds/DrawerOpening.aiff"
+				:soundB "afplay /System/Library/PrivateFrameworks/ScreenReader.framework/Versions/A/Resources/Sounds/DrawerClosing.aiff"
+				:soundOn "afplay /System/Library/PrivateFrameworks/ScreenReader.framework/Versions/A/Resources/Sounds/DrillOut.aiff"
+				:soundOff "afplay /System/Library/PrivateFrameworks/ScreenReader.framework/Versions/A/Resources/Sounds/DrillIn.aiff"
+			}
 	:layers { ;=...............................................................................................................................
+		:tab-mode {:key :tab}
 		:space-mode {:key :spacebar :condi [:!fµ :!dµ :!cµ :!kµ :!wµ :!Rctrl-mode :!L⌘]} ;prevents space mode from overiding F and D modes
-		; :fn-mode {:key :fn :condi [:!fµ :!dµ :!cµ :!kµ :!wµ]}
 		:Rctrl-mode {:key :right_control :alone {:key :spacebar} :condi [:!fµ :!dµ :!cµ :!kµ :!wµ :!space-mode]} ; :Rctrl-mode {:key :right_control :condi [:!fµ :!dµ :!cµ :!kµ :!wµ]}
-		:numpad-mode {:key :f20} ;
+		:numpad-mode {:key :f20} ;? defined in layers and given symbolic key never used so can be triggered via setting variable in space mode
+		:numrow-mode {:key :f20}
+		:symrow-mode {:key :f20}
 		}
 	:simlayers { ;=..........................................................................................................................
+		:return_or_enterµ {:key :return_or_enter}
 		:semicolon-mode {:key :semicolon}
 		:slash-mode {:key :slash}
 		:aµ {:key :a}
 		:bµ {:key :b}
 		:cµ {:key :c}
-		:dµ {:key :d :condi :!space-mode} ;why is this n
+		:dµ {:key :d :condi :!space-mode} ;why is this here?
 		:eµ {:key :e}
 		:fµ {:key :f}
 		:gµ {:key :g}
@@ -44,49 +51,84 @@
 		:lµ {:key :l}
 		:mµ {:key :m}
 		:nµ {:key :n}
+		:oµ {:key :o}
+		:pµ {:key :p}
+		:qµ {:key :q}
 		:rµ {:key :r}
 		:sµ {:key :s}
-		:uµ {:key :u} ;
+		:tµ {:key :t}
+		:uµ {:key :u}
+		:vµ {:key :v}
 		:wµ {:key :w}
+		:xµ {:key :x}
+		:yµ {:key :y}
+		:zµ {:key :z}
 		:periodµ {:key :period}
-		};
+		}
+;+ ===============================================================
+:main [  ; ============================= MAIN ========================
+;+ ===============================================================
 
-:main [ ; =========================== MAIN ===========================
 ;============================ HOLDINGKEY =========================
-		{:des "Holding Keys: ⌘V for Clipboard History, ⇧⌘3 for Screenshot Palette, ⇧⌘4 for Snagit" :rules [
+		{:des "Holding Keys: ⌘V for Clipboard History, ⇧⌘3 for Screenshot Palette, ⇧⌘4 for Snagit"
+			:rules [
 					[:!Cv nil nil {:alone :!Cv :held [:km "Clipboard History"] :repeat false :halt true :params{:alone 150 :held 150}} ] ; default :alone is 500ms and would be too long
 					[:!SC3 nil nil {:alone :!SC3 :held [:km "-Screenshot Palette"] :repeat false :halt true :params{:alone 150 :held 150}} ]
 					[:!SC4 nil nil {:alone :!SC4 :held [:km "-Snagit Palette"] :repeat false :halt true :params{:alone 150 :held 150}} ]
 		]}
-;======================== TAP and DOUBLEPRESS and MODIFIERS  =====================
+;======================== TAP and DOUBLEPRESS  =====================
 	;; C T O S and Q W E R
-	;TODO work on bartender shortcuts...
+		{:des "DOUBLE PRESS: ⌘q² to quit,  " :rules[
+			;* Double Press Command Q to Quit
+				[:!C#Pq [ :!Cq ["⌘q" 0]] ["⌘q" 1]] 		;? when ⌘q is pressed the first time  > variable is set to 1 and nothing is sent
+				[:!C#Pq ["⌘q" 1] nil {:delayed {:invoked ["⌘q" 0] :canceled ["⌘q" 0]}}] ;? when pressed the second time send ⌘Q
+				 ]}
+		{:des "Double Press Special" :rules [[:condi :!fµ :!dµ :!cµ :!kµ :!wµ :!Rctrl-mode]
+			;* Double Press Left Command for 🆎
+				[:left_gui [[:🔊] :!Cspacebar  ["L⌘" 0]] ["L⌘" 1]]
+					; [:left_gui [[:🔊] :!Cp  ["L⌘" 0]] ["L⌘" 1]]
+					; [:left_gui :left_gui nil {:alone ["L⌘" 1] :delayed{:invoked ["L⌘" 0] :canceled ["L⌘" 0]}} ]
+				;* Double Press Right Command for
+						[:right_gui [ :!!f14 ["R⌘" 0]] ["R⌘" 1]]
+						[:right_gui :right_gui  nil {:alone ["R⌘" 1 ]:delayed {:invoked ["R⌘" 0] :canceled ["R⌘" 0]}}]
+			;* Double Press Command Spacebar for something...
+					[:!Cspacebar [[:🔊] :!Ospacebar  ["L⌘spacebar" 0]] ["L⌘spacebar" 1]]
+					[:!Cspacebar :!Cspacebar nil {:alone ["L⌘spacebar" 1] :delayed{:invoked ["L⌘spacebar" 0] :canceled ["L⌘spacebar" 0]}} ]
+			]}
+;========================  MODIFIERS and COMMAND MODES ==============================
 
-	{:des "Quit application by pressing ⌘q twice" :rules[ [:!C#Pq [ [:beep] :!Cq ["⌘q" 0]] ["⌘q" 1]]
-			[:!C#Pq ["⌘q" 1] nil {:delayed {:invoked ["⌘q" 0] :canceled ["⌘q" 0]}}] ]}
-
-	;* Double Press Left command gives ⌘p palette and double pressing ⌘ space gives other thing
-			{:des "Double Press L⌘ Alone for alfred" :rules[ [:condi :!fµ :!dµ :!cµ :!kµ :!wµ :!Rctrl-mode]
-			; [:left_gui [[:beep] :!Cspacebar  ["L⌘" 0]] ["L⌘" 1]] :! for command space..
-			[:left_gui [[:beep] :!Cp  ["L⌘" 0]] ["L⌘" 1]] ;! for command P
-			[:left_gui :left_gui nil {:alone ["L⌘" 1] :delayed{:invoked ["L⌘" 0] :canceled ["L⌘" 0]}} ]
-
-			;* Double cpress ⌘Spacebar for something...
-			[:!Cspacebar [[:beep] :!Ospacebar  ["L⌘spacebar" 0]] ["L⌘spacebar" 1]]
-			[:!Cspacebar :!Cspacebar nil {:alone ["L⌘spacebar" 1] :delayed{:invoked ["L⌘spacebar" 0] :canceled ["L⌘spacebar" 0]}} ]
+		{:des "Shift Space for underscore and dash, Left to Right Modifers...":rules[
+			[:!Rright_control :!Shyphen] [:!Rspacebar :!Shyphen] ;* Right Shift +Spacebar (or mod) for underscore
+			[:!Sright_control :hyphen] [:!Sspacebar :hyphen]  ;*Left Shift+Spacebar (or mod) for dash
+			; [:!Sright_shift [:🔊]] [:!Rleft_shift [:🔊]] ;* Left  Shift to Right Shift
+			; [:!Sright_gui [:🔊]] [:!Rleft_gui [:🔊]] ;* Left Shift to Right Command and Right Shift to Left Command
 			]}
 
-	;* Shift Space for underscore and dash
-		{:des "Shift Space for underscor and dash"
-		:rules[ [:!Sspacebar :!Shyphen][:!Sright_control :!Shyphen] [:!Rspacebar :hyphen] ]}
+			 {:des "Command Modes...":rules[
+				;* hold and double press space verison
+			 	;*Left Command to Right Command for home row number mode
+				; [:!Cright_gui [[:soundOff] ["numrow-mode" 0]] ["numrow-mode" 1]]
+				;*(R)⌘+(L)⌘ for Number
+						[:!Qleft_gui nil nil {:alone [[:soundOff] ["numrow-mode" 0]]
+						:held [[:soundOn] ["numrow-mode" 1]] :afterup [[:soundOff] ["numrow-mode" 0]]
+						:repeat false :halt false :params{:alone 150 :held 150}} ]
+				;*(L)⌘ +(R) ⌘ for Symbol Home Row Mode
+						[:!Cright_gui nil nil {:alone [[:soundOff] ["symrow-mode" 0]]
+						:held [[:soundOn] ["symrow-mode" 1]] :afterup [[:soundOff] ["symrow-mode" 0]]
+						:repeat false :halt false :params{:alone 150 :held 150}} ]
+					;* switch version
+						; [:!Cright_gui [[:soundOff] ["numrow-mode" 0]] ["numrow-mode" 1]]
+						; [:!Cright_gui [[:soundOn] ["numrow-mode" 1]]]
+					;* old one not triggering a mode
+						; [:!Cright_gui [[:soundOn] ["numrow-mode" 1]] nil
+						; {:alone ["numrow-mode" 1] :afterup ["numrow-mode" 0] }]
 
-	;* Shift Shift for move window
-		{:des "Shift to shift " :rules[ [:!Sright_shift [:beep]] [:!Rleft_shift [:beep]] ]}
-		{:des "Shift to opposite command " :rules[ [:!Sright_gui [:beep]] [:!Rleft_gui [:beep]] ]}_
-		{:des "Left Command to Right Command " :rules[ [:!Cright_gui [:beep]] [:!Qleft_gui [:beep]] ]}_
+				; [:!Qleft_gui [:🔊]] ;* Right Command to Left Command
+			]}
 
-	;* Single Press modifier ; ;! breaks numpad mode
-	  ; {:des   "Change right_command to command-tab when used alone"
+		;* Single Press modifier
+		;! breaks numpad mode
+	  	; {:des   "Change right_command to command-tab when used alone"
                       ;  :rules [[:right_command :right_command nil {:alone [:!Ctab]}]
                               ;  ]}1
 ;======================== SIMULTANEOUSKEY ========================
@@ -94,33 +136,26 @@
 		[ [:k :m] [ [:km "Activate Keyboard Maestro"]] ] ;* km to activate Keyboard Maestro
 		[ [:v :c]  [:km "Activate Visual Studio Code"] ] ;* vc to Activate Visual Studio Code
 		; [ [:n :m]  [:km "Activate Messages"] ] ;* nm to Activate Messages ;! go to active message...
-		; [ [:n :i] [[:beep] :!STCo] ] ;! * ni to OmniFocus Quick Entry
-		; [ [:spacebar :d] [[:beep] [:km "Show Desktop Mgmt Palette"]] ]
-		; [ [:s :d ] [[:beep] [:km "Show Desktop Mgmt Palette"]] ];! accidentally triggered...
-		[ [:1 :2 ] [[:beep] :f13] ]
-		[ [:1 :4 ] [[:beep] :!Cf13] ]
-		[ [:1 :5 ] [[:beep] :!SCf13] ]
-		[ [:1 :6 ] [[:beep] :!SCTf13] ]
-		[ [:1 :7 ] [[:beep] :!SCOTf13] ]
-		; [ [:left_                                                                             :right_shift ] [[:beep] :caps_lock] ]
+		;* Fn testing
+			[ [:1 :2 ] [[:🔊] :f13] ]
+			[ [:1 :4 ] [[:🔊] :!Cf13] ]
+			[ [:1 :5 ] [[:🔊] :!SCf13] ]
+			[ [:1 :6 ] [[:🔊] :!SCTf13] ]
+			[ [:1 :7 ] [[:🔊] :!SCOTf13] ]
 		]}
 ;======================= HYPER MODE and MODIFIERS ======================
-	; {:des "Capslock as hyper" :rules [[:##caps_lock :!!left_control   [:!fµ :!dµ] {:alone :escape}]] }
-	; {:des "Capslock as hyper" :rules [[:##caps_lock :!!left_control nil {:alone :escape} ]] }
 	{:des "Capslock as hyper" :rules [ [:condi :!space-mode :!Rctrl-mode]
 		[:##caps_lock :!!left_control nil {:alone :escape} ] ] }
-
-	;* UHK FN as mac fn
-	{:des "FN from UHK" :rules [
-		[:#SOCTf24 :fn [:uhk-keyboard] ]]}
-
-	{:des "return_or_enter" :rules [[:##return_or_enter :left_control nil {:alone :return_or_enter} ]] }
-	;* 💡 idea to include (l)⌘_space tap and holding
-	; {:des "left+right command for numpad" :rules [[:!Cright_gui  :left_control nil {:alone :return_or_enter} ]] } ; numpad mode
-
-
+	{:des "FN from UHK" :rules [[:#SOCTf24 :fn [:uhk-keyboard] ]]} ;* UHK FN as mac fn via UHK hardcoded f24 > fn in KE but only for uhk
+	;! return mode broken because pushing enter send control not lazy like non modifier mode
+			;* 💡 idea to include (l)⌘_space tap and holding
+			; {:des "return_or_enter" :rules [
+			; [:##return_or_enter :left_control nil {:alone :return_or_enter} ]] }
+			; {:des "return_or_enter" :rules [[:##return_or_enter :left_control nil {:lazy true :alone :return_or_enter} ]] }
+			; {:des "return_or_enter" :rules [[:##return_or_enter :left_control nil {:key:lazy true :alone :return_or_enter} ]] }
+			; {:des "left+right command for numpad" :rules [[:!Cright_gui  :left_control nil {:alone :return_or_enter} ]] } ; numpad mode
 ;=========================== SPACE MODE ==========================
-	{:des "spacebar mode" :rules [
+	{:des "spacebar mode" :rules [ ;? set up not to conflict with numpad-mode
 			[:##j :left_arrow [:space-mode :!numpad-mode]] ;* cursor navigation
 					[:##l :right_arrow [:space-mode :!numpad-mode]]
 					[:##i :up_arrow [:space-mode :!numpad-mode]]
@@ -131,40 +166,37 @@
 					[:##y :page_up [:space-mode :!numpad-mode]]
 					[:##h :page_down [:space-mode :!numpad-mode]]
 			[:##s :left_shift [:space-mode :!numpad-mode]] ;* modifiers
-					[:##f :left_command [:space-mode :!numpad-mode]]
+					[:##f :right_command [:space-mode :!numpad-mode]]
 					[:##a :left_control [:space-mode :!numpad-mode]]
 					[:##d :left_option [:space-mode :!numpad-mode]]
 			[:##period :!Speriod [:space-mode :!numpad-mode]] ;* Shift for Symbols
 				[:##comma :!Scomma [:space-mode :!numpad-mode]]
-				[:##1 :!S1 [:space-mode :!numpad-mode]] ;*
-				[:##2 :!S2 [:space-mode :!numpad-mode]]
-				[:##3 :!S3 [:space-mode :!numpad-mode]]
-				[:##4 :!S4 [:space-mode :!numpad-mode]]
-				[:##5 :!S5 [:space-mode :!numpad-mode]]
+				; [:##1 :!S1 [:space-mode :!numpad-mode]] ;*
+				; [:##2 :!S2 [:space-mode :!numpad-mode]]
+				; [:##3 :!S3 [:space-mode :!numpad-mode]]
+				; [:##4 :!S4 [:space-mode :!numpad-mode]]
+				; [:##5 :!S5 [:space-mode :!numpad-mode]]
 				[:##6 :!S6 [:space-mode :!numpad-mode]]
 				[:##7 :!S7 [:space-mode :!numpad-mode]]
 				[:##8 :!S8 [:space-mode :!numpad-mode]]
 				[:##9 :!S9 [:space-mode :!numpad-mode]]
 				[:##0 :!S0 [:space-mode :!numpad-mode]]
 			[:##grave_accent_and_tilde :escape :space-mode] ; backtick for escape
-			[:##w :!!f14 :space-mode] ; activate Moom
+			[:##w :!!f14 :space-mode] [:##w :!!f14 :Rctrl-mode] ;* activate Moom
 			[:##caps_lock :escape :space-mode] ; capslock for escape
 			[:##b :spacebar :space-mode] ; b for space bar
 
 			;* Numpad Mode
 				[:##semicolon :return_or_enter [:space-mode :!numpad-mode]]
-				[:right_gui ["numpad-mode" 1] :space-mode {:alone ["numpad-mode" 1] :afterup ["numpad-mode" 0]}] ;
+				[:right_gui ["numpad-mode" 1] :space-mode {:alone ["numpad-mode" 1] :afterup ["numpad-mode" 0]}]
+				[:right_gui ["numpad-mode" 1] :Rctrl-mode {:alone ["numpad-mode" 1] :afterup ["numpad-mode" 0]}]
 				[:right_control ["numpad-mode" 1] :space-mode {:alone ["numpad-mode" 1] :afterup ["numpad-mode" 0]}] ;
-				; [:right_gui [ :beep :set["numpad-mode" 1]] :space-mode ] ;!
+				[:spacebar ["numpad-mode" 1] :Rctrl-mode {:alone ["numpad-mode" 1] :afterup ["numpad-mode" 0]}]
+				[:tab ["numpad-mode" 1] :space-mode {:alone ["numpad-mode" 1] :afterup ["numpad-mode" 0]}]
+				; [:right_gui [ :🔊 :set["numpad-mode" 1]] :space-mode ] ;!
 				; [:right_gui ["numpad-mode" 1] nil {:alone ["numpad-mode" 1] :afterup ["numpad-mode" 0]}];!
 		]}
-	;* Right Control Mode
-	{:des "Right Control mode" :rules [
-			[:##w :!!f14 :Rctrl-mode] ;* activate Moom
-			[:right_gui ["numpad-mode" 1] :Rctrl-mode {:alone ["numpad-mode" 1] :afterup ["numpad-mode" 0]}]
-			[:spacebar ["numpad-mode" 1] :Rctrl-mode {:alone ["numpad-mode" 1] :afterup ["numpad-mode" 0]}]
-	]}
-;=======================  NUMPAD MODE =======================
+;=======================  NUMBER MODES =======================
 	{:des "Numpad Mode" :rules [
 			[:j :1 :numpad-mode]
 			[:k :2 :numpad-mode]
@@ -183,18 +215,68 @@
 			[:right_control :spacebar :numpad-mode]
 			[:spacebar :spacebar :numpad-mode]
 	]}
+	{:des "Homerow Number Mode" :rules [
+			[:!Ca :1 :numrow-mode] [:a :1 :numrow-mode]
+			[:a :!S1 :symrow-mode]
+			[:!Cs :2 :numrow-mode] [:s :2 :numrow-mode]
+			[:s :!S2 :symrow-mode]
+			[:!Cd :3 :numrow-mode] [:d :3 :numrow-mode]
+			[:d :!S3 :symrow-mode]
+			[:!Cf :4 :numrow-mode] [:f :4 :numrow-mode]
+			[:f :!S4 :symrow-mode]
+			[:!Cg :5 :numrow-mode] [:g :5 :numrow-mode]
+			[:g :!S5 :symrow-mode]
+			[:!Ch :6 :numrow-mode] [:h :6 :numrow-mode]
+			[:h :!S6 :symrow-mode]
+			[:!Cj :7 :numrow-mode] [:j :7 :numrow-mode]
+			[:j :!S7 :symrow-mode]
+			[:!Ck :8 :numrow-mode] [:k :8 :numrow-mode]
+			[:k :!S8 :symrow-mode]
+			[:!Cl :9 :numrow-mode] [:l :9 :numrow-mode]
+			[:l :!S9 :symrow-mode]
+			[:!Csemicolon :0 :numrow-mode] [:semicolon :0 :numrow-mode]
+				[:semicolon :!S0 :symrow-mode]
+			[:!Csemicolon :return_or_enter :numrow-mode] [:semicolon :return_or_enter :numrow-mode]
+ 			[:!Cp :!S!Sequal_sign :numrow-mode] [:p :!Sequal_sign :numrow-mode]
+			[:m :hyphen :numrow-mode] [:o :!S8 :numrow-mode] [:i :slash :numrow-mode]
+				[:p :delete_or_backspace :symrow-mode]
+			 [:!Cperiod :period :numrow-mode] [:period :period :numrow-mode]
+			[:!Cslash :slash :numrow-mode] [:slash :slash :numrow-mode]
+
+			[:!Cspacebar :spacebar :numrow-mode] [:spacebar :spacebar :numrow-mode]
+			[:!Cright_control :spacebar :numrow-mode] [:right_control :spacebar :numrow-mode]
+	]}
 ;============================ A MODE ============================
-{	:des "a-mode for a things" :rules [
+;=========================== B MODE =============================
+	{:des " b-mode for b things" :rules [
+	;+ b+o+...............................................................................................................................
+			[:o [:km "Boldate Word"] [["bµ" 1] ["boµ" 1]]] ;+ b+o² for Boldate Word
+			[:c [:km "Boldate Clean"] [["bµ" 1] ["boµ" 1]]] ;+ b+o+c for Boldate Clean
+			[:a [:km "Boldate Clean Left"] [["bµ" 1] ["boµ" 1]]] ;+ b+o+a for Boldate Clean Left
+
+	:bµ ;* –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+		;* b+o for Boldate Things
+				[:o [ [:vk_none] ["boµ" 1] ] nil {:delayed {:canceled [ ["boµ" 0]["bµ" 0] ]
+				:invoked [ :!Cb ["boµ" 0] ] }:held [ [:km "b held"] ["bo¬" 1]] }]
+
+			[:w [:!Oleft_arrow :!OSright_arrow] ] ; b+w for highlight word
+			[:l [:!Ta :!TSe :!Sright_arrow] ] ; b+l for highlight lio
+	]}
+	{	:des "a-mode for a things" :rules [
 		;+ a+k+...............................................................................................................................
 			[:k :!CTSt [["aµ" 1] ["akµ" 1]]] ;+ a+k² for km macro 1
 	:aµ ;* –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 		;* a+k for blank (held if held)
-				[:k [ [:beep] :!Oescape ["akµ" 1] ] nil {:delayed {:canceled [ ["akµ" 0]["aµ" 0] ]
+				[:k [ [:🔊] :!Oescape ["akµ" 1] ] nil {:delayed {:canceled [ ["akµ" 0]["aµ" 0] ]
 				:invoked [ [:vk_none] ["akµ" 0] ] }:held [ [:km "a held"] ["ak¬" 1]] }]
-		[:c [[:beep] :!Oescape] ]		;* a+c for autocomplete now
+		[:c [[:🔊] :!Oescape] ]		;* a+c for autocomplete now
 
 		[:semicolon :!Osemicolon] ;• a+semicolon for elipse (to be used as suffix to trigger things)
-]}
+		;* Active Workspace left right stuff..
+		; [:comma [btt: ""]] ;• a+semicolon for elipse (to be used as suffix to trigger things)
+				[:comma :!TOleft_arrow] ;• a+comma for Active Screen Workspace Left (via ⌃⌥← set in BTT I think)
+				[:period :!TOright_arrow] ;• a+period for Active Screen Workspace Left (via ⌃⌥← set in BTT I think)
+	]}
 ;============================ D MODE =============================
 	{:des "d-mode for d things" :rules [
 		;+ d+spacebar+..................................................................................................................
@@ -261,6 +343,7 @@
 			[:a [:km "Activate Calendar"] [["cµ" 1] ["caµ" 1]]] ;+ c+a² for Activate Calendar
 			[:spacebar [:km "Query Calendar"] [["cµ" 1] ["caµ" 1]]] ;+ c+a+spacebar for Query Calendar
 			[:s [:km "Capitalize Selection"] [["cµ" 1] ["caµ" 1]]] ;+ c+a+s for Capitalize Selection
+			[:w [:km "Capitalize Word"] [["cµ" 1] ["caµ" 1]]] ;+ c+a+w for Capitalize Word
 	:cµ ;* –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 		;* c+o for contacts
 				[:o [ [:vk_none] ["coµ" 1] ] nil {:delayed{:canceled [ ["coµ" 0]["cµ" 0] ]:invoked
@@ -323,29 +406,29 @@
 					:invoked[[:km "Hover Recent Daily Journal Entry"]["jdµ" 0]] } :held[[:km "held"]["jd¬" 1]] }]
 			;* j+e for Jump to Evernote
 					[:e [:km "Jump to Evernote" ["jeµ" 1]] nil {:delayed {:canceled[["jeµ" 0]["jµ" 0]]
-					:invoked[:vk_none ["jeµ" 0]] } :held[:escape [:beep] [:km "Query Evernote"]["je¬" 1]] }]
+					:invoked[:vk_none ["jeµ" 0]] } :held[:escape [:🔊] [:km "Query Evernote"]["je¬" 1]] }]
 			;* j+left_gui for blank (held if held)
-					[:left_gui [ [:beep] :!FCTOSf1 ["jleft_guiµ" 1] ] nil {:delayed {:canceled [ ["jleft_guiµ" 0]["jµ" 0] ]
+					[:left_gui [ [:🔊] :!FCTOSf1 ["jleft_guiµ" 1] ] nil {:delayed {:canceled [ ["jleft_guiµ" 0]["jµ" 0] ]
 					:invoked [ [vk_none] ["jleft_guiµ" 0] ] }:held [ [:km "j held"] ["jleft_gui¬" 1]] }]
 		;* j+right_gui for blank (held if held)
-				[:right_gui [ [:beep] :f13 ["jright_guiµ" 1] ] nil {:delayed {:canceled [ ["jright_guiµ" 0]["jµ" 0] ]
+				[:right_gui [ [:🔊] :f13 ["jright_guiµ" 1] ] nil {:delayed {:canceled [ ["jright_guiµ" 0]["jµ" 0] ]
 				:invoked [ [vk_none] ["jright_guiµ" 0] ] }:held [ [:km "j held"] ["jright_gui¬" 1]] }]
 
-		; [:left_gui [[:beep] :!FCTOSf1]] ;* (l)⌘ for focus menu bar (via System Shortcut)
-		; [:right_gui [[:beep] :f13]] ;* (r)⌘ for focus bartender (via System Shortcut)
+		; [:left_gui [[:🔊] :!FCTOSf1]] ;* (l)⌘ for focus menu bar (via System Shortcut)
+		; [:right_gui [[:🔊] :f13]] ;* (r)⌘ for focus bartender (via System Shortcut)
 
-		[:w [[:beep] :!CTSw]] ;*Jump to Window via Context hotkey
+		[:w [[:🔊] :!Ospacebar]] ;*Jump to Window via Context hotkey
 		[:c [:alf "Search Chrome Bookmarks" "com.mdreizin.chrome.bookmarks"]]
 		[:o [:km "Jump to OmniFocus"]]
 		[:s [:km "Jump to Stickies"]]
 		[:period [:km "© Open Context Menu"]]
 		[:spacebar [:km "Click GUI Button"]] ;* j+spacebar for Click GUI Button
 
-		[:a [[:beep] [:wait][:escp]]]
+		[:a [[:🔊] [:wait][:escp]]]
 		[:r [:sendreturn]]
 		[:q [:sendq]]
-		; [:spacebar [[:beep] [:sendspace]]]
-		[:1 [[:beep] [:sendesc]]]
+		; [:spacebar [[:🔊] [:sendspace]]]
+		[:1 [[:🔊] [:sendesc]]]
 
 		]}
 ;============================ I MODE ==============================
@@ -360,8 +443,8 @@
 				:invoked [ [:vk "none"] ["itµ" 0] ] } ; is triggered as delayed response even when holding
 				:held [ :!Oleft_arrow :!OSright_arrow :!Ci ["it¬" 1]]
 				}]
-			;* i+e for Insert Emoji
-				[:e [:km "Insert Emoji"]]
+
+				[:e [:km "Insert Emoji"]] ;• i+e for Insert Emoji
 	]}
 ;============================ R MODE ============================
 	{:des "r-mode for remote things" :rules [
@@ -380,7 +463,7 @@
 				}]
 		;* Transport Controls
       [:spacebar :!TOCspacebar] ;*spacebar for pause via ⌃⌥⌘Space ;*j/l/i/k for remote transport controls
-      [:spacebar :!TOCspacebar] ;! thought I might need to fix for right control
+      [:right_control :!TOCspacebar] ;! thought I might need to fix for right control
 			[:j :!TOCleft_arrow]
 			[:l :!TOCright_arrow]
 			[:i :!TOCup_arrow]
@@ -395,6 +478,8 @@
 			[:p :!TOCp] ;*n/p for next/previous video⌃⌥⌘;/'
 			[:n :!TOCn]
 			[:f :!TOCf] ;*f for fullOCreen via ⌃⌥⌘f
+			[:tab [:km "Screenshot Timestamp"]] ;*tab for Screenshot Timeestamp
+			[:p [:km "Screenshot Timestamp"]] ;*tab for Screenshot Timeestamp
     ;* Remote Palette
 				[:return_or_enter [:km "-Remote Modes Palette"]] ;*return for remote palette
 				[:m [:km "Media Remote"]] 		;*r for YouTube Remote
@@ -491,9 +576,7 @@
 					[[:vk_none]["kcµ" 0]] }:held [[:vk_none]["kc¬" 1]] }]
 	]}
 ;============================= N MODE ============================
-	{:des "n mode for new things" :rules [
-	; TODO: need to fix up n-mode as prototype template so I can compact it and use it as boilerplate
-
+	{:des "n-mode for n things" :rules [
 		;+ n+i+................................................................................................................................
 			;+ n+i² for Send to OmniFocus
 			[:i [:km "Send to Omnifocus"] [["nµ" 1] ["niµ" 1]]]
@@ -517,10 +600,8 @@
 			[:o "say 'double...o'" [["nµ" 1] ["noµ" 1]] ] ;| this works well and blocks the n+c delayed trigger, trigger cancelled
 			;+ n+o+w
 			[:w [:km "Hover Evernote Now"] [["nµ" 1] ["noµ" 1]] ] ;* this works fine and cancels the delayi
-
-					; h+o+w Hover Evernote Now
-		[:w [:km "Hover Evernote Now"] [["hµ" 1] ["hoµ" 1]]]
-
+			;+ h+o+w Hover Evernote Now
+			[:w [:km "Hover Evernote Now"] [["hµ" 1] ["hoµ" 1]]]
 		;+ n+c+...............................................................................................................................
 			;+ n+c+c for...
 			[:c "say 'double...c'" [["nµ" 1] ["ncµ" 1]]] ;*this works well and blocks the n+c delayed trigger
@@ -562,7 +643,7 @@
 				:held ["say 'holding c'" ["nc¬" 1]] }]
 
 		;* n+d for New 2Do (via hotkey)
-    		[:d [ [:beep] :!STC2  ["ndµ" 1] ] nil {:delayed
+    		[:d [ [:🔊] :!STC2  ["ndµ" 1] ] nil {:delayed
 				{:canceled [ [:vk_none] ["ndµ" 0]["nµ" 0] ]
 				:invoked [ [:vk_none]["ndµ" 0]["nµ" 0] ] } ; is invoked at tap, hold BUT NOT DOUBLE C
 				:held [:vk_none ["nd¬" 1]] }]
@@ -609,9 +690,9 @@
 		;+ m+p+................................................................................................................................
 				[:p [:km "AVAILABLE"] [["mµ" 1] ["mpµ" 1]]] ;+ m+p² for...
 		;+ m+spacebar+...............................................................................................................................
-			[:spacebar [[:beep] :!STOf11] [["mµ" 1] ["mspacebarµ" 1]]] ;+ m+spacebar² for km macro 1
-			[:s [[:beep] :!SOTf9] [["mµ" 1] ["mspacebarµ" 1]]] ;+ m+spacebar² for km macro 1
-			[:x [:beep] [["mµ" 1] ["mspacebarµ" 1]]] ;+ m+spacebar+x for km macro 2
+			[:spacebar [[:🔊] :!STOf11] [["mµ" 1] ["mspacebarµ" 1]]] ;+ m+spacebar² for km macro 1
+			[:s [[:🔊] :!SOTf9] [["mµ" 1] ["mspacebarµ" 1]]] ;+ m+spacebar² for km macro 1
+			[:x [:🔊] [["mµ" 1] ["mspacebarµ" 1]]] ;+ m+spacebar+x for km macro 2
 
 	:mµ ;* –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 		;* m+s for blank (held if held).....................
@@ -620,7 +701,7 @@
 
 		;* m+spacebar for Bartender Menubar Shortcuts
 				[:spacebar [ :vk_none ["mspacebarµ" 1] ] nil {:delayed {:canceled [ ["mspacebarµ" 0]["mµ" 0] ]
-				:invoked [ [:beep] :!STOf11 ["mspacebarµ" 0] ] }:held [ [:beep] :!STOf10 ["mspacebar¬" 1]] }]
+				:invoked [ [:🔊] :!STOf11 ["mspacebarµ" 0] ] }:held [ [:🔊] :!STOf10 ["mspacebar¬" 1]] }]
 
 		[:r [:km "Hover OmniFocus Morning Review"]] ;*m+r for Hover OmniFocus Morning Review
 	]}
@@ -637,34 +718,11 @@
         		:held ["say 'holding '" ["periodo¬" 1]] }]
 
 			; period+w for highlight word
-			[:spacebar [[:beep] :!SCTt] ]
+			[:spacebar [[:🔊] :!SCTt] ]
 			; period+l for highlight lio
 			[:l [:!Ta :!TSe :!Sright_arrow] ]
 	]}
-;=========================== B-MODE =============================
-	{:des " b-mode for b things"
-    	:rules [
-				; b+o mode
-			    ;; b+o+o
-					[:o "say 'double o'" [["bµ" 1] ["boµ" 1]]]
-			    ;; b+o+c
-					[:c [:km "Boldate Clean"] [["bµ" 1] ["boµ" 1]]]
-				  ;; b+o+a
-				  [:a [:km "Boldate Clean Left"] [["bµ" 1] ["boµ" 1]]]
-          ;; b+o+d
-          [:d "say 'three key...chord'" [["bµ" 1] ["boµ" 1]]]
 
-     	:bµ ;
-      		; b+o for Boldate Toggle
-        		[:o [ [:vk_none]  ["boµ" 1] ] nil {:delayed {:canceled [ ["boµ" 0] ]
-        		:invoked [ :!Cb ["boµ" 0] ] }
-        		:held ["say 'holding '" ["bo¬" 1]] }]
-
-			; b+w for highlight word
-			[:w [:!Oleft_arrow :!OSright_arrow] ]
-			; b+l for highlight lio
-			[:l [:!Ta :!TSe :!Sright_arrow] ]
-	]}
 ;=========================== H-MODE ==============================
 	{:des " h-mode for h things" :rules [
 	;* h+o+ mode
@@ -713,9 +771,10 @@
 			[:q :!Cgrave_accent_and_tilde]
 			[:e :!SCgrave_accent_and_tilde]
 		; * focus left/right/up/ down via Slate
-			; [:a [:!!f19 :vk_none :j :vk_none] ]
-			; [:d [:!!f19 :vk_none :l :vk_none] ]
-			; [:w [:!!f19 :vk_none :i :vk_none] ]j
+			[:a :!!j]
+			[:d :!!l]
+			[:w :!!i]
+			[:s :!!k]
 
 		[:comma [:km "Switch Third Space Left"] ] ;* c+, for Switch Third Space Left
 		[:period [:km "Switch Third Space Right"] ] ;* c+. for Switch Third Space Right
@@ -738,16 +797,13 @@
 ;============================ W MODE =============================
 	{:des "w-mode" :rules [
 		;+ w+spacebar+.................................................................................................................
-			;+ w+spacebar²  for Expose via BTT Hotkey
-			[:spacebar [ :escape [:beep] [:btt "Expose"] ] [["wµ" 1] ["wspacebarµ" 1]] ]
-				;+ w+right_control²  for Expose via BTT Hotkey
-				[:right_control [ :escape [:beep] [:btt "Expose"] ] [["wµ" 1] ["wright_controlµ" 1]] ]
-
+			[:spacebar [[:soundB]:!!f14] [["wµ" 1]["wspacebarµ" 1]] ] ;+ w+spacebar²  for Moom
+			[:right_control [[:soundB]:escape [:btt "Expose"]] [["wµ" 1]["wright_controlµ" 1]] ];+ w+R⌃²  for Expose via BTT Hotkey
 			;+ w+e  for Expose via BTT Hotkey
 			[:e [ :escape  [:btt "Expose"] ] [["wµ" 1] ["wspacebarµ" 1]] ]
 			; [:spacebar :j [["wµ" 1] ["wspacebarµ" 1]] ]
 			;+ w+spacebar+d for Show Desktop (via BTT)
-			[:d [ :escape [:beep] [:btt "Show Desktop"] ] [["wµ" 1] ["wspacebarµ" 1]]]
+			[:d [ :escape [:🔊] [:btt "Show Desktop"] ] [["wµ" 1] ["wspacebarµ" 1]]]
 			;+ w+spacebar+n for Show Notifcation Center (via BTT)
 			[:n [ [:btt "Show Notification Center"] ] [["wµ" 1] ["wspacebarµ" 1]]]
 			;+ w+spacebar+a for Mission Control: Application Windows
@@ -757,15 +813,15 @@
 			[:left_command [:!!SCTOf4] [["wµ" 1] ["wleft_commandµ" 1]] ]
 
 	:wµ ;* –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-
-			;* w+spacebar for Jump to window via context hot key
-				[:spacebar [ :!CTSw [:beep]["wspacebarµ" 1] ] nil {:delayed{:canceled [[:beep] ["wspacebarµ" 0]["wµ" 0]]
-				:invoked [[:vk_none] ["wspacebarµ" 0]] }:held [ [:send]  [:km "Mission Control: Application Windows"] ["wspacebar¬" 1]] }]
-				;* w+right_control for Jump to window via context hot key
-						[:right_control [ :!CTSw [:beep]["wright_controlµ" 1] ] nil {:delayed{:canceled [[:vk_none] ["wright_controlµ" 0]["wµ" 0]]
-						:invoked [[:vk_none] ["wright_controlµ" 0]] }:held [ [:send]  [:km "Mission Control: Application Windows"] ["wright_control¬" 1]] }]
+			;* w+spacebar for Moom via ⌃⌥⇧⌘f14 hotkey
+				[:spacebar [ :!!f14 [:soundA]["wspacebarµ" 1] ] nil {:delayed{:canceled [[:🔊] ["wspacebarµ" 0]["wµ" 0]]
+				:invoked [[:vk_none]["wspacebarµ" 0]] }}]
+			;* w+right_control for Jump to window via context hot key
+						[:right_control [ :!!f14 [:soundA]["wright_controlµ" 1] ] nil
+						{ :delayed {:canceled [["wright_controlµ" 0]["wµ" 0]]:invoked ["wright_controlµ" 0] }
+						:held [:km "Mission Control: Application Windows"] }]
 			;* w+left_command for Expose (via BTT hotkey ⌃⌥⇧⌘f4)
-				[:left_command [[:btt "Expose"] [:beep] ["wleft_commandµ" 1]] nil {:delayed
+				[:left_command [[:btt "Expose"] [:🔊] ["wleft_commandµ" 1]] nil {:delayed
 				{:canceled [["wleft_commandµ" 0]["wµ" 0]] ; 'i' is said for everything
 				:invoked [[:vk_none] ["wleft_commandµ" 0]] } ; is triggered as delayed response even when holding
 				:held [  [:km "Mission Control: Application Windows"] ["wleft_command¬" 1]] }]
@@ -773,125 +829,129 @@
 			;* w+a/d for Switch Active Workspace Left/Right (via System Hotkeys)
 				[:a :!TOleft_arrow]
 				[:d :!TOright_arrow]
-				[:comma :!TOleft_arrow]
-				[:period :!TOright_arrow]
+				[:comma [:km "Switch All Workspaces Left"]]
+				[:period [:km "Switch All Workspaces Right"]]
 			;* w+caps_lock/f for Move Window Space Left/Right (via BTT script)
-				[:caps_lock [ [:beep] [:btt "Move Window Space Left"] ] ]
-				[:f [[:beep] [:btt "Move Window Space Right"] ] ]
+				[:caps_lock [ [:🔊] [:btt "Move Window Space Left"] ] ]
+				[:f [[:🔊] [:btt "Move Window Space Right"] ] ]
 
 			;* w+1 for Switch to Workspace 1 (via BTT script)
-				[:1 [ [:beep] [:btt "Switch to Workspace 1"]]]
+				[:1 [ [:🔊] [:btt "Switch to Workspace 1"]]]
 			;* w+2 for Switch to Workspace 2 (via BTT script)
-				[:2 [ [:beep] [:btt "Switch to Workspace 2"]]]
+				[:2 [ [:🔊] [:btt "Switch to Workspace 2"]]]
 			;* w+3 for Switch to Workspace 3 (via BTT script)
-				[:3 [ [:beep] [:btt "Switch to Workspace 3"]]]
+				[:3 [ [:🔊] [:btt "Switch to Workspace 3"]]]
 			;* w+4 for Switch to Workspace 4 (via BTT script)
-				[:4 [ [:beep] [:btt "Switch to Workspace 4"]]]
+				[:4 [ [:🔊] [:btt "Switch to Workspace 4"]]]
 	]}
 
+;============================ X MODE ============================
+		{	:des "x-mode for..." :rules [
+		:xµ ;* –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+				[:p :!Tdelete_or_backspace ] 		;* x+p for clear notification
+				]}
 ;============================ MORE  =============================
 	;! more modes temporary till moved to real mode sections
 	; * semicolon-mode for...
 		{:des "semicolon-mode"
 		:rules [:semicolon-mode
 		[:spacebar :!SOCspacebar] ; spacebar to Trigger Macro by name via ⇧⌥⌘SPACE
-		[:t [ [:beep] [:btt "BTT Test"] ] ]
+		[:t [ [:🔊] [:btt "BTT Test"] ] ]
  	   ]}
 	;* slash-mode for...
 	{:des "slash-mode"
   	:rules [:slash-mode
-    [:spacebar [ [:beep] :!SCslash] ] ; spacebar to Focus help menu via ⇧⌘/
+    [:spacebar [ [:🔊] :!SCslash] ] ; spacebar to Focus help menu via ⇧⌘/
   	]}
 	;* E mode for...
 		{:des "e-mode for e things" ; e-mode
 		:rules [:eµ [:c [:km "Try Current Macro"]]]}
+
+		{:des "tab-mode" :rules[:tab-mode
+				[:j :!!j]
+				[:l :!!l]
+				[:i :!!i]
+				[:k :!!k]
+				[:b :!!b]
+		]}
+		;* Chunk Mode
+     {:des   "chunkwm mode"
+				:rules [
+					[:!CS4 ["/usr/local/bin/chunkc border::clear" :!CS4]]
+					[:!CS6 ["/usr/local/bin/chunkc border::clear" :!CS3]]
+					[:!COSf "/usr/local/bin/chunkc tiling::window --toggle native-fullscreen"]
+					:chunkwm-insert-mode
+							[:spacebar "/usr/local/bin/chunkc tiling::window --use-insertion-point cancel"]
+							[:j "/usr/local/bin/chunkc tiling::window --use-insertion-point west"]
+							[:k "/usr/local/bin/chunkc tiling::window --use-insertion-point south"]
+							[:i "/usr/local/bin/chunkc tiling::window --use-insertion-point north"]
+							[:l "/usr/local/bin/chunkc tiling::window --use-insertion-point east"]
+				:chunkwm-move-mode 	;; move windows
+							[:j "/usr/local/bin/chunkc tiling::window --warp west"]
+							[:k "/usr/local/bin/chunkc tiling::window --warp south"]
+							[:i "/usr/local/bin/chunkc tiling::window --warp north"]
+							[:l "/usr/local/bin/chunkc tiling::window --warp east"]
+				:chunkwm-scale-mode ;; scale windows
+							[:j "~/local/bin/chunkwm-resize left"]
+							[:k "~/local/bin/chunkwm-resize down"]
+							[:i "~/local/bin/chunkwm-resize up"]
+							[:l "~/local/bin/chunkwm-resize right"]
+							[:spacebar "/usr/local/bin/chunkc tiling::desktop --equalize"]; equalize size of windows
+					:tab-mode
+							[:return_or_enter "~/local/bin/chunkwm-change-mode"]
+							[:grave_accent_and_tilde "/usr/local/bin/brew services restart chunkwm"]
+								[:j "/usr/local/bin/chunkc tiling::window --focus west"]
+								[:k "/usr/local/bin/chunkc tiling::window --focus south"]
+								[:i "/usr/local/bin/chunkc tiling::window --focus north"]
+								[:l "/usr/local/bin/chunkc tiling::window --focus east"]
+								[:n "/usr/local/bin/chunkc tiling::window --focus next"]
+								[:p "/usr/local/bin/chunkc tiling::window --focus prev"]
+							;; change gap setting, reload chunkwmrc
+								[:backslash "~/local/bin/chunkwm-gaps 10 10 5 5 7.5"]
+								[:delete_or_backspace "~/local/bin/chunkwm-gaps 0 0 0 0 0"]
+					;; chunkwm workspace
+						;; [:1 "/usr/local/bin/chunkc tiling::desktop --focus $(( $(/usr/local/bin/chunkc tiling::query --desktop id) == 1 ? $(/usr/local/bin/chunkc get _last_active_desktop) : 1 ))"]
+						;; [:2 "/usr/local/bin/chunkc tiling::desktop --focus $(( $(/usr/local/bin/chunkc tiling::query --desktop id) == 2 ? $(/usr/local/bin/chunkc get _last_active_desktop) : 2 ))"]
+						;; [:3 "/usr/local/bin/chunkc tiling::desktop --focus $(( $(/usr/local/bin/chunkc tiling::query --desktop id) == 3 ? $(/usr/local/bin/chunkc get _last_active_desktop) : 3 ))"]
+						;; [:4 "/usr/local/bin/chunkc tiling::desktop --focus $(( $(/usr/local/bin/chunkc tiling::query --desktop id) == 4 ? $(/usr/local/bin/chunkc get _last_active_desktop) : 4 ))"]
+					;; rotate windows clockwise and anticlockwise
+				[:semicolon "/usr/local/bin/chunkc tiling::window -M next"]
+				[:r "/usr/local/bin/chunkc tiling::desktop --rotate 90"]
+					[:!Sr "/usr/local/bin/chunkc tiling::desktop --rotate 270"]
+					;; rotate on x and y axis
+					[:y "/usr/local/bin/chunkc tiling::desktop --mirror vertical"]
+					[:!Sy "/usr/local/bin/chunkc tiling::desktop --mirror horizontal"]
+					[:spacebar "/usr/local/bin/chunkc tiling::window --toggle fullscreen"]
+					[:a "/usr/local/bin/chunkc tiling::window --toggle float"]
+					[:b "/usr/local/bin/chunkc tiling::desktop --layout bsp"]
+					[:m "/usr/local/bin/chunkc tiling::desktop --layout monocle"]
+					[:0 "/usr/local/bin/chunkc tiling::desktop --layout float"]
+					[:x "/usr/local/bin/chunkc tiling::window --close"]
+
+					[:delete_or_backspace "/usr/local/bin/chunkc tiling::window --close"]
+					[:open_bracket "/usr/local/bin/chunkc tiling::window --send-to-monitor prev"]
+					[:close_bracket "/usr/local/bin/chunkc tiling::window --send-to-monitor next"]]}
 ]
 :simlayer-threshold 150 ;def = 50 ;! when set to 1000 there is very noticable delay and 50 isnt enough time, 300 too much
-
 ;*==================== DEVICES and INPUT SOURCES ====================
 		:devices {
 				:macbook-internal [{:product_id 631 :vendor_id 1452}]
 				:uhk-keyboard [{:product_id 24866 :vendor_id 7504}]
-		}
- :applications       {:emacs-mode-disable-app        [ "^org\\.gnu\\.Emacs$",
-                                                      "^org\\.gnu\\.AquamacsEmacs$",
-                                                      "^org\\.gnu\\.Aquamacs$",
-                                                      "^org\\.pqrs\\.unknownapp.conkeror$",
-                                                      "^com\\.microsoft\\.rdc$",
-                                                      "^com\\.microsoft\\.rdc\\.mac$",
-                                                      "^com\\.microsoft\\.rdc\\.macos$",
-                                                      "^com\\.microsoft\\.rdc\\.osx\\.beta$",
-                                                      "^net\\.sf\\.cord$",
-                                                      "^com\\.thinomenon\\.RemoteDesktopConnection$",
-                                                      "^com\\.itap-mobile\\.qmote$",
-                                                      "^com\\.nulana\\.remotixmac$",
-                                                      "^com\\.p5sys\\.jump\\.mac\\.viewer$",
-                                                      "^com\\.p5sys\\.jump\\.mac\\.viewer\\.web$",
-                                                      "^com\\.teamviewer\\.TeamViewer$",
-                                                      "^com\\.vmware\\.horizon$",
-                                                      "^com\\.2X\\.Client\\.Mac$",
-                                                      "^com\\.apple\\.Terminal$",
-                                                      "^com\\.googlecode\\.iterm2$",
-                                                      "^co\\.zeit\\.hyperterm$",
-                                                      "^co\\.zeit\\.hyper$",
-                                                      "^io\\.alacritty$",
-                                                      "^net\\.kovidgoyal\\.kitty$",
-                                                      "^org\\.vim\\.",
-                                                      "^com\\.qvacua\\.VimR$",
-                                                      "^com\\.vmware\\.fusion$",
-                                                      "^com\\.vmware\\.horizon$",
-                                                      "^com\\.vmware\\.view$",
-                                                      "^com\\.parallels\\.desktop$",
-                                                      "^com\\.parallels\\.vm$",
-                                                      "^com\\.parallels\\.desktop\\.console$",
-                                                      "^org\\.virtualbox\\.app\\.VirtualBoxVM$",
-                                                      "^com\\.vmware\\.proxyApp\\.",
-                                                      "^com\\.parallels\\.winapp\\.",
-                                                      "^org\\.x\\.X11$",
-                                                      "^com\\.apple\\.x11$",
-                                                      "^org\\.macosforge\\.xquartz\\.X11$",
-                                                      "^org\\.macports\\.X11$",
-                                                      "^com\\.sublimetext\\.",
-                                                      "^com\\.microsoft\\.VSCode$"]
-                      :Emacs                         ["^org\\.gnu\\.Emacs$"
-                                                      "^org\\.gnu\\.AquamacsEmacs$"
-                                                      "^org\\.gnu\\.Aquamacs$"]
-                      :Chromes                       ["^com\\.google\\.Chrome$", "^org\\.chromium\\.Chromium$", "^com\\.google\\.Chrome\\.canary$"]
-                      :Firefoxes                     ["^org\\.mozilla\\.firefox$"
-                                                      "^org\\.mozilla\\.firefoxdeveloperedition$"]
-                      :Terminals                     ["^com\\.apple\\.Terminal$"
-                                                      "^com\\.googlecode\\.iterm2$"
-                                                      "^co\\.zeit\\.hyperterm$"
-                                                      "^co\\.zeit\\.hyper$"
-                                                      "^io\\.alacritty$"
-                                                      "^net\\.kovidgoyal\\.kitty$"]
-                      :vim-mode-disabled-application ["^com\\.apple\\.Terminal$"
-                                                      "^com\\.googlecode\\.iterm2$"
-                                                      "^co\\.zeit\\.hyperterm$"
-                                                      "^co\\.zeit\\.hyper$"
-                                                      "^io\\.alacritty$"
-                                                      "^net\\.kovidgoyal\\.kitty$"
-                                                      "^org\\.vim\\."
-                                                      "^com\\.qvacua\\.VimR$"]
-                      :Finder                        ["^com\\.apple\\.finder$"]
-                      :Debuggers                     ["^org\\.mozilla\\.firefox$"
-                                                      "^org\\.mozilla\\.firefoxdeveloperedition$"
-                                                      "^com\\.google\\.Chrome$"
-                                                      "^org\\.chromium\\.Chromium$"
-                                                      "^com\\.google\\.Chrome\\.canary$"
-                                                      "^com\\.apple\\.Safari$"
-                                                      "^com\\.microsoft\\.VSCode$"]
-                      :Browsers                      ["^org\\.mozilla\\.firefox$"
-                                                      "^org\\.mozilla\\.firefoxdeveloperedition$"
-                                                      "^com\\.google\\.Chrome$"
-                                                      "^org\\.chromium\\.Chromium$"
-                                                      "^com\\.google\\.Chrome\\.canary$"
-                                                      "^com\\.apple\\.Safari$"]
-                      :2do                           ["^com\\.guidedways\\.TodoMac.*"]}
- 		:input-sources      {
+			}
+		:applications {
+			:Chromes      ["^com\\.google\\.Chrome$", "^org\\.chromium\\.Chromium$", "^com\\.google\\.Chrome\\.canary$"]
+			:Terminals     ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^co\\.zeit\\.hyperterm$", "^co\\.zeit\\.hyper$", "^io\\.alacritty$", "^net\\.kovidgoyal\\.kitty$"]
+			:Finder           ["^com\\.apple\\.finder$"]
+			:Debuggers   ["^org\\.mozilla\\.firefox$", "^org\\.mozilla\\.firefoxdeveloperedition$", "^com\\.google\\.Chrome$", "^org\\.chromium\\.Chromium$", "^com\\.google\\.Chrome\\.canary$", "^com\\.apple\\.Safari$", "^com\\.microsoft\\.VSCode$"]
+			:Browsers      ["^org\\.mozilla\\.firefox$", "^org\\.mozilla\\.firefoxdeveloperedition$", "^com\\.google\\.Chrome$", "^org\\.chromium\\.Chromium$", "^com\\.google\\.Chrome\\.canary$", "^com\\.apple\\.Safari$"]
+			}
+		:input-sources {
+	 		:squirrel {:input_mode_id   "com.googlecode.rimeime.inputmethod.Squirrel"
+						:input_source_id "com.googlecode.rimeime.inputmethod.Squirrel.Rime"
+						:language        "zh-Hans"}
 			:us {:input_mode_id   ""
 					:input_source_id "com.apple.keylayout.US"
-					:language        "en"}}
-
+					:language        "en"}
+			}
 ;*============================ END ===============================
 }
